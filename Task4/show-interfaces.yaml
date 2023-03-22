@@ -8,11 +8,11 @@
    - name: DISPLAYING THE INTERFACES
      ios_command:
        commands:
-         - show running-config | include interface
+         - show ip int brief
          - show version | include Cisco IOS
      register: config
- 
+
    - name: SAVE OUTPUT TO ./backups/
      copy:
-       content: "{{ config.stdout[0] }}"
-       dest: "backups/show_status_{{ inventory_hostname }}.txt"
+       content: "{{ config.stdout | replace('\\n', '\n') }}"
+       dest: "backups/show_int.ver_{{ inventory_hostname }}.txt"
